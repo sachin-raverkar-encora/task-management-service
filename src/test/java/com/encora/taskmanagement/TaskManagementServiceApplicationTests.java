@@ -6,7 +6,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @ActiveProfiles(value = {"test"})
-//@ImportAutoConfiguration(
+// @ImportAutoConfiguration(
 //    exclude = {
 //      DataSourceAutoConfiguration.class,
 //      MongoAutoConfiguration.class,
