@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.3</version>
+        <relativePath/>
+        <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.encora.taskmanagementservice</groupId>
+    <artifactId>task-management-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>task-management-service</name>
+    <description>Demo project for Spring Boot</description>
+    <url/>
+    <licenses>
+        <license/>
+    </licenses>
+    <developers>
+        <developer/>
+    </developers>
+    <scm>
+        <connection/>
+        <developerConnection/>
+        <tag/>
+        <url/>
+    </scm>
+    <properties>
+        <java.version>17</java.version>
+        <spotless.version>2.43.0</spotless.version>
+        <skipSpotless>false</skipSpotless>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.diffplug.spotless</groupId>
+            <artifactId>spotless-maven-plugin</artifactId>
+            <version>${spotless.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>2.2.22</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.22</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.15.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.4</version>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.4.0</version>
+                <!-- configuration common to all executions -->
+                <configuration>
+                    <generatorName>spring</generatorName>
+                    <configHelp>false</configHelp>
+                    <configOptions>
+                        <annotationLibrary>swagger2</annotationLibrary>
+                        <configHelp>false</configHelp>
+                        <dateLibrary>java8</dateLibrary>
+                        <documentationProvider>springdoc</documentationProvider>
+                        <enumUnknownDefaultCase>true</enumUnknownDefaultCase>
+                        <ensureUniqueParams>true</ensureUniqueParams>
+                        <generatedConstructorWithRequiredArgs>true</generatedConstructorWithRequiredArgs>
+                        <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                        <library>spring-boot</library>
+                        <performBeanValidation>true</performBeanValidation>
+                        <requestMappingMode>controller</requestMappingMode>
+                        <serializableModel>true</serializableModel>
+                        <skipDefaultInterface>false</skipDefaultInterface>
+                        <sortModelPropertiesByRequiredFlag>true</sortModelPropertiesByRequiredFlag>
+                        <sortParamsByRequiredFlag>true</sortParamsByRequiredFlag>
+                        <unhandeledException>true</unhandeledException>
+                        <useBeanValidation>true</useBeanValidation>
+                        <useEnumCaseInsensitive>true</useEnumCaseInsensitive>
+                        <useJakartaEe>true</useJakartaEe>
+                        <useResponseEntity>true</useResponseEntity>
+                        <useSpringBoot3>true</useSpringBoot3>
+                        <useSpringController>true</useSpringController>
+                        <useTags>true</useTags>
+                    </configOptions>
+                    <globalProperties>
+                        <delegatePattern>true</delegatePattern>
+                        <skipFormModel>false</skipFormModel>
+                        <openapiNormalizer>REF_AS_PARENT_IN_ALLOF=true</openapiNormalizer>
+                    </globalProperties>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-task-management-service</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>generate-sources</phase>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/apis/task-management-service.yaml</inputSpec>
+                            <apiPackage>com.encora.taskmanagement.api</apiPackage>
+                            <modelPackage>com.encora.taskmanagement.model</modelPackage>
+                            <output>${project.basedir}</output>
+                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <apiPackage>com.encora.taskmanagement.api</apiPackage>
+                                <basePackage>com.encora.taskmanagement</basePackage>
+                                <configPackage>com.encora.taskmanagement.configuration</configPackage>
+                                <invokerPackage>com.encora.taskmanagement</invokerPackage>
+                                <modelPackage>com.encora.taskmanagement.model</modelPackage>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>${spotless.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <skip>${skipSpotless}</skip>
+                    <java>
+                        <excludes>
+                            <exclude>src/main/java/**/model/*.java</exclude>
+                        </excludes>
+                        <endWithNewline/>
+                        <importOrder/>
+                        <removeUnusedImports/>
+                        <formatAnnotations/>
+                        <!-- no need to specify files, inferred automatically, but you can if you want -->
+                        <!-- apply a specific flavor of google-java-format and reflow long strings -->
+                        <googleJavaFormat>
+                            <version>1.18.1</version>
+                            <reflowLongStrings>true</reflowLongStrings>
+                            <formatJavadoc>false</formatJavadoc>
+                        </googleJavaFormat>
+                    </java>
+                    <markdown>
+                        <includes>
+                            <!-- You have to set the target manually -->
+                            <include>**/*.md</include>
+                        </includes>
+
+                        <flexmark/>
+                        <!-- has its own section below -->
+                    </markdown>
+                    <pom>
+                        <!-- These are the defaults, you can override if you want -->
+                        <includes>
+                            <include>pom.xml</include>
+                        </includes>
+                        <sortPom>
+                            <encoding>UTF-8</encoding>
+                            <!-- The encoding of the pom files -->
+                            <lineSeparator>${line.separator}</lineSeparator>
+                            <!-- line separator to use -->
+                            <expandEmptyElements>false</expandEmptyElements>
+                            <!-- Should empty elements be expanded?-->
+                            <spaceBeforeCloseEmptyElement>false</spaceBeforeCloseEmptyElement>
+                            <!-- Should a space be added inside self-closing elements?-->
+                            <keepBlankLines>true</keepBlankLines>
+                            <!-- Keep empty lines -->
+                            <nrOfIndentSpace>4</nrOfIndentSpace>
+                            <!-- Indentation -->
+                            <indentBlankLines>false</indentBlankLines>
+                            <!-- Should empty lines be indented? -->
+                            <indentSchemaLocation>false</indentSchemaLocation>
+                            <!-- Should schema locations be indented? -->
+                            <predefinedSortOrder>recommended_2008_06</predefinedSortOrder>
+                            <!-- Sort order of elements: https://github.com/Ekryd/sortpom/wiki/PredefinedSortOrderProfiles-->
+                            <sortOrderFile/>
+                            <!-- Custom sort order of elements: https://raw.githubusercontent.com/Ekryd/sortpom/master/sorter/src/main/resources/custom_1.xml -->
+                            <sortDependencies/>
+                            <!-- Sort dependencies: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
+                            <sortDependencyExclusions/>
+                            <!-- Sort dependency exclusions: https://github.com/Ekryd/sortpom/wiki/SortDependencies-->
+                            <sortPlugins/>
+                            <!-- Sort plugins: https://github.com/Ekryd/sortpom/wiki/SortPlugins -->
+                            <sortProperties>false</sortProperties>
+                            <!-- Sort properties -->
+                            <sortModules>false</sortModules>
+                            <!-- Sort modules -->
+                            <sortExecutions>false</sortExecutions>
+                            <!-- Sort plugin executions -->
+                        </sortPom>
+                    </pom>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>auto-style</id>
+                        <goals>
+                            <goal>apply</goal>
+                        </goals>
+                        <phase>validate</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: Encora Task Management API
+  version: v1
+
+paths:
+  /signup:
+    post:
+      summary: Register a new user
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Bad Request - Invalid input data
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - Email address already exists
+#          content:
+#            application/json:
+#              schema:
+#                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    SignupRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address (must be unique)
+          example: john.doe@example.com
+        password:
+          type: string
+          format: password
+          minLength: 8
+          description: User's password (at least 8 characters, one uppercase, one lowercase, one number, and one special character)
+          example: "P@ssw0rd1"
+        displayName:
+          type: string
+          maxLength: 50
+          description: User's display name (alphabets and spaces only)
+          example: John Doe
+        firstName:
+          type: string
+          maxLength: 50
+          description: User's first name (alphabets only)
+          example: John
+        lastName:
+          type: string
+          maxLength: 50
+          description: User's last name (alphabets only)
+          example: Doe
+      required:
+        - email
+        - password
+        - displayName
+        - firstName
+        - lastName
+#    ErrorResponse:
+#      $ref: '#/components/schemas/ProblemDetail'
+    ProblemDetail2:
+      title: Problem Details for HTTP APIs
+      description: Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem detail
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: number
+        detail:
+          type: string
+        instance:
+          type: string
+      required:
+        - title
+        - detail
+externalDocs:
+  description: "Find more info about error responses here"
+  url: "https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ProblemDetail.html"
