@@ -1,0 +1,4 @@
+# Ignore everything else in the root directory
+*
+# But don't ignore the 'target' directory
+!target/ 

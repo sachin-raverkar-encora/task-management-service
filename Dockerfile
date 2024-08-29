@@ -1,7 +1,5 @@
-FROM openjdk:17-alpine:latest
-LABEL authors="Sachin.Raverkar"
-
+FROM amazoncorretto:17-al2023
 WORKDIR /app
-COPY target/*.jar app.jar
+COPY target/task-management-service-1.0.0.jar /app/task-management-service-1.0.0.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "task-management-service-1.0.0.jar"]
