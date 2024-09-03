@@ -79,7 +79,7 @@ public class SignupRequest implements Serializable {
    * User's password (at least 8 characters, one uppercase, one lowercase, one number, and one special character)
    * @return password
   */
-  @NotNull @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$") @Size(min = 8) 
+  @NotNull @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$") @Size(min = 8, max = 30) 
   @Schema(name = "password", example = "P@ssw0rd1", description = "User's password (at least 8 characters, one uppercase, one lowercase, one number, and one special character)", requiredMode = Schema.RequiredMode.REQUIRED)
   @JsonProperty("password")
   public String getPassword() {
