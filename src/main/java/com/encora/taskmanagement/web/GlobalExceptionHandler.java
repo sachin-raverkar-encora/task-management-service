@@ -1,6 +1,7 @@
 package com.encora.taskmanagement.web;
 
 import com.encora.taskmanagement.DuplicateUserException;
+import com.encora.taskmanagement.UserNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.net.URI;
@@ -37,6 +38,23 @@ public class GlobalExceptionHandler {
     problemDetail.setTitle("Duplicate User Error");
     problemDetail.setDetail(ex.getMessage());
     return new ResponseEntity<>(problemDetail, HttpStatus.CONFLICT);
+  }
+
+  /**
+   * Handles duplicate user exception.
+   *
+   * @param ex duplicate user exception
+   * @param request the request
+   * @return the response entity
+   */
+  @ExceptionHandler(UserNotFoundException.class)
+  public ResponseEntity<ProblemDetail> handleUserNotFoundException(
+      UserNotFoundException ex, WebRequest request) {
+    ProblemDetail problemDetail = ProblemDetail.forStatus(HttpStatus.FORBIDDEN);
+    problemDetail.setType(URI.create("/login"));
+    problemDetail.setTitle("Invalid User Error");
+    problemDetail.setDetail(ex.getMessage());
+    return new ResponseEntity<>(problemDetail, HttpStatus.FORBIDDEN);
   }
 
   /**

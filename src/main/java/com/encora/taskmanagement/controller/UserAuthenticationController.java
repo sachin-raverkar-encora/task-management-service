@@ -3,8 +3,8 @@ package com.encora.taskmanagement.controller;
 import com.encora.taskmanagement.api.AuthenticationApi;
 import com.encora.taskmanagement.domain.User;
 import com.encora.taskmanagement.mapper.UserMapper;
-import com.encora.taskmanagement.model.SignupRequest;
-import com.encora.taskmanagement.model.SignupResponse;
+import com.encora.taskmanagement.model.LoginRequest;
+import com.encora.taskmanagement.model.LoginResponse;
 import com.encora.taskmanagement.model.UserDetails;
 import com.encora.taskmanagement.service.UserService;
 import jakarta.validation.Valid;
@@ -25,10 +25,10 @@ public class UserAuthenticationController implements AuthenticationApi {
   private final UserService userService;
 
   @Override
-  public ResponseEntity<SignupResponse> signupPost(@Valid SignupRequest signupRequest) {
-    final User user = userService.createUser(signupRequest);
+  public ResponseEntity<LoginResponse> loginPost(@Valid LoginRequest loginRequest) {
+    final User user = userService.loginUser(loginRequest);
     final UserDetails userDetails = UserMapper.INSTANCE.toUserDetails(user);
-    final SignupResponse signupResponse = new SignupResponse(userDetails);
-    return ResponseEntity.created(URI.create("/users/" + user.getId())).body(signupResponse);
+    final LoginResponse loginResponse = new LoginResponse(userDetails);
+    return ResponseEntity.ok().location(URI.create("/users/" + user.getId())).body(loginResponse);
   }
 }
