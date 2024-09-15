@@ -6,6 +6,7 @@ info:
 paths:
   /signup:
     post:
+      operationId: signup
       summary: Register a new user
       tags:
         - Authentication
@@ -30,12 +31,13 @@ paths:
         #                $ref: '#/components/schemas/ErrorResponse'
         '409':
           description: Conflict - Email address already exists
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/ErrorResponse'
+  #          content:
+  #            application/json:
+  #              schema:
+  #                $ref: '#/components/schemas/ErrorResponse'
   /login:
     post:
+      operationId: login
       summary: Login for an existing user
       tags:
         - Authentication
@@ -60,10 +62,52 @@ paths:
         #                $ref: '#/components/schemas/ErrorResponse'
         '409':
           description: Conflict - Email address already exists
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/ErrorResponse'
+  #          content:
+  #            application/json:
+  #              schema:
+  #                $ref: '#/components/schemas/ErrorResponse'
+  /tasks:
+    post:
+      operationId: createTask
+      summary: Creates a new task.
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTaskRequest'
+      responses:
+        '201':
+          description: Successfully created a new task.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTaskResponse"
+        '400':
+          description: Bad Request - Invalid input data
+  /tasks/search:
+    post:
+      operationId: searchTasks
+      summary: Searches tasks by criteria.
+      tags:
+        - Tasks
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchTasksRequest'
+      responses:
+        '200':
+          description: Successfully searched tasks.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SearchTasksResponse"
+        '400':
+          description: Bad Request - Invalid input data
 components:
   schemas:
     Email:
@@ -94,6 +138,64 @@ components:
       maxLength: 50
       description: User's last name (alphabets only)
       example: Doe
+    TaskId:
+      type: integer
+      description: Id of the task.
+      example: 101
+    TaskTitle:
+      type: string
+      description: Summary of the task.
+      example: Send email to ABC customer.
+    TaskDescription:
+      type: string
+      description: Details of the task.
+      example: Send email to ABC customer immediately informing them to process the pending payments within two days.
+    TaskDate:
+      type: string
+      format: date-time
+      description: Date of the task.
+      example: 2024-12-28T15:30:00Z
+    TaskStatus:
+      type: string
+      description: Status of the task.
+      example: COMPLETED
+      enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - ON_HOLD
+        - COMPLETED
+        - CANCELED
+    PageNumber:
+      type: integer
+      description: Page number (0-based)
+      default: 0
+    PageSize:
+      type: integer
+      description: Page size (number of records per page)
+      default: 10
+    Sort:
+      type: array
+      items:
+        type: string
+        example: "dueDate,desc"
+    TotalElements:
+      type: integer
+      description: Total number of matching tasks
+    TotalPages:
+      type: integer
+      description: Total number of pages
+    LastPage:
+      type: boolean
+      description: True if this is the last page
+    FirstPage:
+      type: boolean
+      description: True if this is the first page
+    NumberOfElements:
+      type: integer
+      description: Number of elements on the current page
+    EmptyPage:
+      type: boolean
+      description: True if the content list is empty
     SignupRequest:
       type: object
       properties:
@@ -125,6 +227,86 @@ components:
       required:
         - email
         - password
+    CreateTaskRequest:
+      type: object
+      properties:
+        title:
+          $ref: "#/components/schemas/TaskTitle"
+        description:
+          $ref: "#/components/schemas/TaskDescription"
+        dueDate:
+          $ref: "#/components/schemas/TaskDate"
+      required:
+        - title
+        - description
+        - dueDate
+    CreateTaskResponse:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/TaskId"
+        title:
+          $ref: "#/components/schemas/TaskTitle"
+        description:
+          $ref: "#/components/schemas/TaskDescription"
+        dueDate:
+          $ref: "#/components/schemas/TaskDate"
+        status:
+          $ref: "#/components/schemas/TaskStatus"
+    SearchTasksRequest:
+      type: object
+      properties:
+        title:
+          $ref: "#/components/schemas/TaskTitle"
+        dueDateFrom:
+          $ref: "#/components/schemas/TaskDate"
+        dueDateTo:
+          $ref: "#/components/schemas/TaskDate"
+        status:
+          type: array
+          items:
+            $ref: "#/components/schemas/TaskStatus"
+          description: "Optional array of task statuses to filter by."
+        page:
+          $ref: "#/components/schemas/PageNumber"
+        size:
+          $ref: "#/components/schemas/PageSize"
+        sort:
+            $ref: "#/components/schemas/Sort"
+    SearchTasksResponse:
+      type: object
+      properties:
+        content:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                $ref: "#/components/schemas/TaskId"
+              title:
+                $ref: "#/components/schemas/TaskTitle"
+              description:
+                $ref: "#/components/schemas/TaskDescription"
+              dueDate:
+                $ref: "#/components/schemas/TaskDate"
+              status:
+                $ref: "#/components/schemas/TaskStatus"
+        page:
+          $ref: "#/components/schemas/PageNumber"
+        size:
+          $ref: "#/components/schemas/PageSize"
+        totalElements:
+          $ref: "#/components/schemas/TotalElements"
+        totalPages:
+          $ref: "#/components/schemas/TotalPages"
+        last:
+          $ref: "#/components/schemas/LastPage"
+        first:
+          $ref: "#/components/schemas/FirstPage"
+        numberOfElements:
+          $ref: "#/components/schemas/NumberOfElements"
+        empty:
+          $ref: "#/components/schemas/EmptyPage"
     ProblemDetail2:
       title: Problem Details for HTTP APIs
       description: Definition of [RFC7807](https://tools.ietf.org/html/rfc7807) problem detail

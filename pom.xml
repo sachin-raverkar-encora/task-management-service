@@ -184,6 +184,7 @@
                 <!-- configuration common to all executions -->
                 <configuration>
                     <generatorName>spring</generatorName>
+                    <library>spring-boot</library>
                     <configHelp>false</configHelp>
                     <configOptions>
                         <annotationLibrary>swagger2</annotationLibrary>

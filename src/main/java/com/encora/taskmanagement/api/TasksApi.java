@@ -5,10 +5,10 @@
  */
 package com.encora.taskmanagement.api;
 
-import com.encora.taskmanagement.model.LoginRequest;
-import com.encora.taskmanagement.model.LoginResponse;
-import com.encora.taskmanagement.model.SignupRequest;
-import com.encora.taskmanagement.model.SignupResponse;
+import com.encora.taskmanagement.model.CreateTaskRequest;
+import com.encora.taskmanagement.model.CreateTaskResponse;
+import com.encora.taskmanagement.model.SearchTasksRequest;
+import com.encora.taskmanagement.model.SearchTasksResponse;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -39,47 +39,45 @@ import jakarta.annotation.Generated;
 @Generated(value = "org.openapitools.codegen.languages.SpringCodegen", comments = "Generator version: 7.4.0")
 @Validated
 @Controller
-@Tag(name = "Authentication", description = "the Authentication API")
-public interface AuthenticationApi {
+@Tag(name = "Tasks", description = "the Tasks API")
+public interface TasksApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
     /**
-     * POST /login : Login for an existing user
+     * POST /tasks : Creates a new task.
      *
-     * @param loginRequest  (required)
-     * @return User logged in successfully (status code 200)
+     * @param createTaskRequest  (required)
+     * @return Successfully created a new task. (status code 201)
      *         or Bad Request - Invalid input data (status code 400)
-     *         or Conflict - Email address already exists (status code 409)
      */
     @Operation(
-        operationId = "login",
-        summary = "Login for an existing user",
-        tags = { "Authentication" },
+        operationId = "createTask",
+        summary = "Creates a new task.",
+        tags = { "Tasks" },
         responses = {
-            @ApiResponse(responseCode = "200", description = "User logged in successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = LoginResponse.class))
+            @ApiResponse(responseCode = "201", description = "Successfully created a new task.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = CreateTaskResponse.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid input data"),
-            @ApiResponse(responseCode = "409", description = "Conflict - Email address already exists")
+            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid input data")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/login",
+        value = "/tasks",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<LoginResponse> login(
-        @Parameter(name = "LoginRequest", description = "", required = true) @Valid @RequestBody LoginRequest loginRequest
+    default ResponseEntity<CreateTaskResponse> createTask(
+        @Parameter(name = "CreateTaskRequest", description = "", required = true) @Valid @RequestBody CreateTaskRequest createTaskRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"user\" : { \"firstName\" : \"John\", \"lastName\" : \"Doe\", \"displayName\" : \"John Doe\", \"email\" : \"john.doe@example.com\" } }";
+                    String exampleString = "{ \"dueDate\" : \"2024-12-28T15:30:00Z\", \"description\" : \"Send email to ABC customer immediately informing them to process the pending payments within two days.\", \"id\" : 101, \"title\" : \"Send email to ABC customer.\", \"status\" : \"COMPLETED\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }
@@ -91,39 +89,37 @@ public interface AuthenticationApi {
 
 
     /**
-     * POST /signup : Register a new user
+     * POST /tasks/search : Searches tasks by criteria.
      *
-     * @param signupRequest  (required)
-     * @return User registered successfully (status code 201)
+     * @param searchTasksRequest  (required)
+     * @return Successfully searched tasks. (status code 200)
      *         or Bad Request - Invalid input data (status code 400)
-     *         or Conflict - Email address already exists (status code 409)
      */
     @Operation(
-        operationId = "signup",
-        summary = "Register a new user",
-        tags = { "Authentication" },
+        operationId = "searchTasks",
+        summary = "Searches tasks by criteria.",
+        tags = { "Tasks" },
         responses = {
-            @ApiResponse(responseCode = "201", description = "User registered successfully", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = SignupResponse.class))
+            @ApiResponse(responseCode = "200", description = "Successfully searched tasks.", content = {
+                @Content(mediaType = "application/json", schema = @Schema(implementation = SearchTasksResponse.class))
             }),
-            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid input data"),
-            @ApiResponse(responseCode = "409", description = "Conflict - Email address already exists")
+            @ApiResponse(responseCode = "400", description = "Bad Request - Invalid input data")
         }
     )
     @RequestMapping(
         method = RequestMethod.POST,
-        value = "/signup",
+        value = "/tasks/search",
         produces = { "application/json" },
         consumes = { "application/json" }
     )
     
-    default ResponseEntity<SignupResponse> signup(
-        @Parameter(name = "SignupRequest", description = "", required = true) @Valid @RequestBody SignupRequest signupRequest
+    default ResponseEntity<SearchTasksResponse> searchTasks(
+        @Parameter(name = "SearchTasksRequest", description = "", required = true) @Valid @RequestBody SearchTasksRequest searchTasksRequest
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"user\" : { \"firstName\" : \"John\", \"lastName\" : \"Doe\", \"displayName\" : \"John Doe\", \"email\" : \"john.doe@example.com\" } }";
+                    String exampleString = "{ \"size\" : 6, \"last\" : true, \"numberOfElements\" : 5, \"totalPages\" : 5, \"page\" : 0, \"content\" : [ { \"dueDate\" : \"2024-12-28T15:30:00Z\", \"description\" : \"Send email to ABC customer immediately informing them to process the pending payments within two days.\", \"id\" : 101, \"title\" : \"Send email to ABC customer.\", \"status\" : \"COMPLETED\" }, { \"dueDate\" : \"2024-12-28T15:30:00Z\", \"description\" : \"Send email to ABC customer immediately informing them to process the pending payments within two days.\", \"id\" : 101, \"title\" : \"Send email to ABC customer.\", \"status\" : \"COMPLETED\" } ], \"first\" : true, \"totalElements\" : 1, \"empty\" : true }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

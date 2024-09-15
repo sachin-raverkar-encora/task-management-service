@@ -26,7 +26,7 @@ public class UserService {
    * @param signupRequest the signup request
    * @return the user
    */
-public User createUser(@Valid SignupRequest signupRequest) {
+  public User createUser(@Valid SignupRequest signupRequest) {
     if (userRepository.existsByEmail(signupRequest.getEmail())) {
       throw new DuplicateUserException("User already exists.");
     }
